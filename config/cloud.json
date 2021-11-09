@@ -1,7 +1,10 @@
 {
     "urls": {
         "icons": "https://icons.bitwarden.net",
-        "notifications": "https://notifications.bitwarden.com"
+        "notifications": "https://notifications.bitwarden.com",
+        "api": "https://api.bitwarden.com",
+        "identity": "https://identity.bitwarden.com",
+        "events": "https://events.bitwarden.com"
     },
     "stripeKey": "pk_live_bpN0P37nMxrMQkcaHXtAybJk",
     "braintreeKey": "production_qfbsv8kc_njj2zjtyngtjmbjd",

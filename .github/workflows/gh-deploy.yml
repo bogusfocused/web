@@ -1,0 +1,91 @@
+---
+name: gh Deploy
+
+on:
+  workflow_dispatch:
+    inputs: {}
+
+jobs:
+  cloc:
+    name: CLOC
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f
+
+      - name: Set up cloc
+        run: |
+          sudo apt update
+          sudo apt -y install cloc
+
+      - name: Print lines of code
+        run: cloc --include-lang TypeScript,JavaScript,HTML,Sass,CSS --vcs git
+
+  setup:
+    name: Setup
+    runs-on: ubuntu-20.04
+    outputs:
+      version: ${{ steps.version.outputs.value }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f
+
+      - name: Get GitHub sha as version
+        id: version
+        run: |
+          echo "::set-output name=value::${GITHUB_SHA:0:7}"
+
+  build-cloud:
+    name: Build Cloud
+    runs-on: ubuntu-20.04
+    needs: setup
+    env:
+      _VERSION: ${{ needs.setup.outputs.version }}
+      _RELEASE_VERSION: ${{ needs.setup.outputs.release_version }}
+      _TAG_VERSION: ${{ needs.setup.outputs.tag_version }}
+    steps:
+      - name: Set up Node
+        uses: actions/setup-node@46071b5c7a2e0c34e49c3cb8a0e792e86e18d5ea
+        with:
+          node-version: "14"
+
+      - name: Update NPM
+        run: |
+          npm install -g npm@7
+
+      - name: Cache npm
+        id: npm-cache
+        uses: actions/cache@c64c572235d810460d0d6876e9c705ad5002b353 # v2.1.6
+        with:
+          path: "~/.npm"
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Print environment
+        run: |
+          whoami
+          node --version
+          npm --version
+          gulp --version
+          docker --version
+          echo "GitHub ref: $GITHUB_REF"
+          echo "GitHub event: $GITHUB_EVENT"
+
+      - name: Checkout repo
+        uses: actions/checkout@5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Cloud
+        run: |
+          npm run dist:bit:cloud
+
+      - name: Deploy GitHub Pages
+        uses: crazy-max/ghaction-github-pages@db4476a01402e1a7ce05f41832040eef16d14925 # v2.5.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          build_dir: build
+          keep_history: true
+          commit_message: "Staging deploy ${{ needs.setup.outputs.release_version }}"
+
