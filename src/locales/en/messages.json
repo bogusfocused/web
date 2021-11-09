@@ -1494,6 +1494,12 @@
       }
     }
   },
+  "cleanupVault": {
+    "message": "Cleanup vault"
+  },
+  "cleanupVaultDesc": {
+    "message": "Clean up vault. Remove duplicates and merge uris."
+  },
   "weakPasswordsReport": {
     "message": "Weak Passwords Report"
   },

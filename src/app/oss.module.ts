@@ -156,6 +156,7 @@ import { ReusedPasswordsReportComponent } from './tools/reused-passwords-report.
 import { ToolsComponent } from './tools/tools.component';
 import { UnsecuredWebsitesReportComponent } from './tools/unsecured-websites-report.component';
 import { WeakPasswordsReportComponent } from './tools/weak-passwords-report.component';
+import { DuplicatePasswordsReportComponent } from './tools/duplicate-passwords-report.component';
 
 import { AddEditCustomFieldsComponent } from './vault/add-edit-custom-fields.component';
 import { AddEditComponent } from './vault/add-edit.component';
@@ -448,6 +449,7 @@ registerLocaleData(localeZhTw, 'zh-TW');
         VerifyEmailTokenComponent,
         VerifyRecoverDeleteComponent,
         WeakPasswordsReportComponent,
+        DuplicatePasswordsReportComponent,
         ProvidersComponent,
         TwoFactorAuthenticationPolicyComponent,
         MasterPasswordPolicyComponent,

@@ -83,6 +83,7 @@ import { ReusedPasswordsReportComponent } from './tools/reused-passwords-report.
 import { ToolsComponent } from './tools/tools.component';
 import { UnsecuredWebsitesReportComponent } from './tools/unsecured-websites-report.component';
 import { WeakPasswordsReportComponent } from './tools/weak-passwords-report.component';
+import { DuplicatePasswordsReportComponent } from './tools/duplicate-passwords-report.component';
 
 import { VaultComponent } from './vault/vault.component';
 
@@ -246,6 +247,11 @@ const routes: Routes = [
                         path: 'weak-passwords-report',
                         component: WeakPasswordsReportComponent,
                         data: { titleId: 'weakPasswordsReport' },
+                    },
+                    {
+                        path: 'duplicate-passwords-report',
+                        component: DuplicatePasswordsReportComponent,
+                        data: { titleId: 'duplicatePasswordsReport' },
                     },
                     {
                         path: 'exposed-passwords-report',

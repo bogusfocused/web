@@ -14,9 +14,9 @@
     "sourceMap": true,
     "baseUrl": ".",
     "paths": {
-      "tldjs": [
+    /*   "tldjs": [
         "jslib/common/src/misc/tldjs.noop"
-      ],
+      ], */
       "jslib-common/*": [
         "jslib/common/src/*"
       ],
